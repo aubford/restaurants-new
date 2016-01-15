@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  header= rests.name
+  img.showImage(src= rests.image)
+  div.showRight
+    p.showText #{rests.cuisine} cuisine
+    p.showText Located in #{rests.location}, #{rests.state}
+    br
+    p.showText #{rests.bio}
+    p 
+      span.showText Rating: 
+      -var rating = rests.rating
+      -for(var i = 0; i < rating; i++)
+        i.yellow(class="fa fa-star")
+    div.buttons
+      a.button(href='/rests/'+rests.id+'/edit') Edit
+      form(action='/rests/'+rests.id+'/delete', method='post')
+            input.button.red(type='submit', name='delete', value='Delete')

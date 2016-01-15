@@ -1,0 +1,9 @@
+extends layout
+
+block whatever
+  for rest in rests
+    h2.rest=rest.name
+      ul
+        for employee in employees
+          if rest.id === employee.rest_id
+            li= employee.first_name +" "+ employee.last_name

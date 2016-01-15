@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  header New Restaurant
+  form.newForm(method='post', action='/rests')
+    fieldset
+      legend Create Restaurant
+      label.block.not(for='name') Name
+      input.block(type='text', name='name', placeholder='Restaurant Name')
+      label.block(for='location') Location
+      input.block(type='text', name='location', placeholder='City')
+      select.block(name='state')
+        for state in states
+          option(value= state) #{state}
+      label.block(for='cuisine') Cuisine
+      select.block(name='cuisine')
+        for cuisine in cuisineList
+          option(value=cuisine) #{cuisine}
+      div.radio
+        label(for='rating') Rating:  
+        input.inrad(type='radio',name='rating',value='1')
+        input.inrad(type='radio',name='rating',value='2')
+        input.inrad(type='radio',name='rating',value='3', checked)
+        input.inrad(type='radio',name='rating',value='4')
+        input.inrad(type='radio',name='rating',value='5')
+      div.imageContainer
+        label(for='image') Image
+        input.image(type='text', name='image', placeholder='Image URL')
+      textarea.block(name='bio', rows='10', cols='40', placeholder='Short Bio')
+      div.btns
+        button.button(type='submit', name='submit', value='submit') Submit
+        button.button.red(type='submit', name='submit', value='cancel') Cancel
+      

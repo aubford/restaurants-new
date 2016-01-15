@@ -1,0 +1,33 @@
+extends layout
+
+block content
+  header Edit Restaurant
+  form.newForm(method='post', action='/rests/#{rests.id}')
+    fieldset
+      legend Create Restaurant
+      label.block.not(for='name') Name
+      input.block(type='text', name='name', value= rests.name)
+      label.block(for='location') Location
+      input.block(type='text', name='location', value= rests.location)
+      select.block(name='state')
+        for state in states
+          option(value= state, selected=(rests.state === state ? true : undefined)) #{state}
+      label.block(for='cuisine') Cuisine 
+      select.block(name='cuisine')
+        for cuisine in cuisineList
+          option(value = cuisine selected=(rests.cuisine === cuisine ? true : undefined)) #{cuisine}
+      div.radio
+        label(for='rating') Rating: 
+        input.rg(type='radio',name='rating',value='1', checked=(rests.rating == 1 ? true : undefined))
+        input.rg(type='radio',name='rating',value='2', checked=(rests.rating == 2 ? true : undefined))
+        input.rg(type='radio',name='rating',value='3', checked=(rests.rating == 3 ? true : undefined))
+        input.rg(type='radio',name='rating',value='4', checked=(rests.rating == 4 ? true : undefined))
+        input.rg(type='radio',name='rating',value='5', checked=(rests.rating == 5 ? true : undefined))
+      div.imageContainer
+        label(for='image') Image: 
+        input.image(type='text', name='image', value= rests.image)
+      textarea.block(name='bio', rows='10', cols='40') #{rests.bio}
+      div.btns
+        button.button(type='submit', name='submit', value='submit') Submit  
+        button.button.red(type='submit', name='submit', value='cancel') Cancel
+      
