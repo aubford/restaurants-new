@@ -1,9 +1,18 @@
 extends layout
 
-block whatever
+block content
+  header Management
+  hr
   for rest in rests
-    h2.rest=rest.name
-      ul
-        for employee in employees
-          if rest.id === employee.rest_id
-            li= employee.first_name +" "+ employee.last_name
+    div.adminRests
+      p= rest.name
+      p Rating: 
+      div.rating.adminRating
+        -var rating = rest.rating
+        -for(var i = 0; i < rating; i++)
+          i.fa.fa-star.yellow
+      a.button(href='/admin/employees/'+rest.id+'/edit') Edit
+      a.button.red(href='/rests/'+rest.id+'/delete') Delete
+    hr
+      
+      

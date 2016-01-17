@@ -18,7 +18,6 @@ function runQuery (query, callback) {
   });
 }
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.redirect('/rests')
 });
@@ -34,7 +33,7 @@ router.get('/rests/new',function(req,res){
 })
 //CREATE
 router.post('/rests',function(req,res){
-  var name = req.body.name
+  var name = req.body.name.replace(/'/g, "''")
   var location = req.body.location
   var state = req.body.state
   var cuisine = req.body.cuisine
@@ -50,8 +49,8 @@ router.post('/rests',function(req,res){
 })
 //READ
 router.get('/rests/:id',function(req,res){
-  var id = req.params.id
-  runQuery('select * from rests where id = '+id+';',function(results){
+  var id = req.params.id + ';'
+  runQuery('select * from rests where id = '+id,function(results){
     res.render('show',{rests:results.rows[0]})
   })
 })
@@ -60,15 +59,14 @@ router.get('/rests/:id/edit',function(req,res){
   var id = req.params.id
 
   runQuery('select * from rests where id = '+id+';', function(results){
-    console.log(results.rows[0])
     res.render('edit',{rests:results.rows[0], cuisineList:cuisineList,states:states})
   })
 })
 
 //UPDATE
 router.post('/rests/:id',function(req,res){
-  var id = req.params.id
-  var namey = req.body.name
+  var id = req.params.id + ';'
+  var namey = req.body.name.replace(/'/g, "''")
   var location = req.body.location
   var state = req.body.state
   var cuisine = req.body.cuisine
@@ -76,24 +74,68 @@ router.post('/rests/:id',function(req,res){
   var image = req.body.image
   var bio = req.body.bio
 
-  runQuery("update rests set name='"+namey+"', location='"+location+"', state='"+state+"', cuisine='"+cuisine+"', rating='"+rating+"', image='"+image+"', bio='"+bio+"' where id='"+id+"';",
-    function(results){
+  if(req.body.submit === 'cancel'){
     res.redirect('/rests')
+  }else{
+    runQuery("update rests set name='"+namey+"', location='"+location+"', state='"+state+"', cuisine='"+cuisine+"', rating='"+rating+"', image='"+image+"', bio='"+bio+"' where id="+id, function(results){
+      res.redirect('/rests')
     })
+  }
+
 })
+
 //DELETE
-router.post('/rests/:id/delete', function(req,res){
+router.get('/rests/:id/delete', function(req,res){
   var id = req.params.id
   runQuery('delete from rests where id ='+id+';', function(results){
     res.redirect('/rests')
   })
 })
+
 //ADMIN
+
+//all page
 router.get('/admin', function(req,res){
-  runQuery('select * from rests',function(results){
-    runQuery('select * from employees',function(resultsE){
-      res.render('admin', {rests:results.rows, employees:resultsE.rows})
-    })
+  runQuery('select * from rests', function(results){
+      res.render('admin', {rests:results.rows})
+  })
+})
+
+//edit page
+router.get('/admin/employees/:id/edit', function(req,res){
+  var id = req.params.id + ';'
+  runQuery("select * from rests inner join employees on rests.id=employees.rest_id where rests.id="+id, function(results){
+      runQuery("select * from rests where id="+id,function(results2){
+        res.render('employees/edit', {employees:results.rows, name:results2.rows[0].name, restId:req.params.id})
+      })
+  })
+})
+
+//new page
+router.get('/admin/employees/:id/new', function(req,res){
+  var id = req.params.id
+  runQuery("select name from rests where id="+id+";", function(results){
+    res.render('employees/new',{name:results.rows[0].name, id:id})
+  })
+})
+
+//CREATE
+router.post('/admin/employees/:id', function(req,res){
+  var id = req.params.id
+  var firstname = req.body.firstname
+  var lastname = req.body.lastname
+  var position = req.body.position
+
+  runQuery("insert into employees values(default, '"+id+"', '"+firstname+"', '"+lastname+"', '"+position+"');", function(results){
+      res.redirect('/admin')
+  })
+})
+
+//DELETE
+router.get('/admin/employees/:id/delete', function(req,res){
+  var id = req.params.id
+  runQuery('delete from employees where id_emp ='+id+';', function(results){
+    res.redirect('/admin')
   })
 })
 

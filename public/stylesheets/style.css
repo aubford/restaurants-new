@@ -1,10 +1,11 @@
-*:not(li, ul, ol) {
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-body:not(li, ul, ol) {
+body {
+  width: 100vw;
   font: 5vw "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -22,7 +23,10 @@ header {
   position: relative;
 }
 
-.new {
+
+
+/*Index*/
+.goToNew {
   width: 20vw;
   height: 3vh;
   line-height: 3vh;
@@ -34,26 +38,29 @@ header {
   position: absolute;
 }
 
-.resto {
-  height: 25vw;
-  width: 25vw;
-  margin-left: 6.25vw;
-  margin-top: 5vw;
+.restoContainer {
+  height: 30vw;
+  width: 30vw;
+  margin-left: 2.66vw;
+  margin-top: 2.66vw;
   background-color: #e1e1e1;
-  float: left;
+  border: 2px solid black;
+  border-radius: 15px;
+  box-shadow: 4px 7px 12px rgba(0,0,0,.5);
   color:#3c3a39;
+  float: left;
   position: relative;
 }
 
-.padIt {
+.padL {
   padding-left: .5vw;
 }
 
-.padRt {
+.padR {
   padding-right: .5vw;
 }
 
-.link {
+.hiddenLink {
   width: 100%;
   height: 100%;
   top: 0;
@@ -61,32 +68,32 @@ header {
   position: absolute;
 }
 /**/
-.name{
+.restoName{
   height: 5vw;
   line-height: 5vw;
   font-size: .6em;
   color: #747474;
 }
 /**/
-.small {
-  height: 10vw;
+.restoImg {
+  height: 16vw;
   width: 100%;
   display: block;
 }
 /**/
-.cuisine {
+.restoCuisine {
   height: 5vw;
   line-height: 5vw;
   font-size: .4em;
 }
 
 /**/
-.bottom {
+.restoBottom {
   height: 5vw;
   width: 100%;
 }
 
-.location {
+.restoLocation {
   height: 5vw;
   line-height: 2.5vw;
   width: 60%;
@@ -94,7 +101,7 @@ header {
   float: left;
 }
 
-.rating {
+.restoRating {
   width: 40%;
   height: 5vw;
   line-height: 2.5vw;
@@ -104,44 +111,59 @@ header {
   float: left;
 }
 
+
+
+/*Show Page*/
 .showImage {
-  margin-top: 100px;
-  padding-left: 2vw;
+  margin-top: 9vw;
+  margin-left: 2vw;
+  padding: 10px;
   width: 48vw;
+  border: 2px solid black;
+  border-radius: 15px;
+  box-shadow: 4px 7px 12px rgba(0,0,0,.5);
+
   float: left;
 }
 
 .showRight {
-  margin-top: 100px;
-  padding-left: 2vw;
-  width: 48vw;
+  margin-top: 5vw;
+  padding-left: 4vw;
+  width: 50vw;
   float: left;
 }
 
 .showText {
   color: gray;
-  font-size: 50px;
+  font-size: 3.5vw;
   font-style: italic;
 }
 
-.buttons {
+.buttonsDiv {
   width: 100%;
+  background: red;
 }
 
 .button {
   width: 15vw;
-  height: 4vh;
-  line-height: 4vh;
+  height: 5vw;
+  line-height: 5vw;
   margin-top: 5vh;
   margin-right: 3vw;
   text-align: center;
-  color: gray;
+  color: black;
+  cursor: pointer;
   text-decoration: none;
   font-size: 2vmin;
-  border: none;
+  border: 1px solid black;
   background: hsla(120,50%,50%, 1);
   float: left;
 }
+
+/*form {
+  position: relative;
+}*/
+
 
 .red {
   background-color: red;
@@ -156,8 +178,8 @@ header {
 }
 
 fieldset {
+  padding: 2vw;
   margin: 40px;
-  padding: 20px;
   position: relative;
 }
 
@@ -169,11 +191,15 @@ fieldset > * {
   display: block;
 }
 
-.inrad {
-  margin-right: 5px;
+.radio {
+  margin-right: 10px;
 }
 
-.not {
+.margRight12 {
+  margin-right: 12px;
+}
+
+.margTop0 {
   margin-top: 0;
 }
 
@@ -181,4 +207,35 @@ fieldset > * {
   position: absolute;
   bottom: 2vh;
   right: 1vw;
+}
+
+.adminRests {
+  height: 14vmin;
+  line-height: 14vmin;
+  font-size: 2.5vmin;
+  padding-left: 1vw;
+  background-color: lightgray;
+}
+
+.adminRests > * {
+  display: inline-block;
+  float:none;
+  margin: 0 1vw;
+}
+
+.adminRests > :first-child {
+  min-width: 37vw;
+}
+
+.adminRating {
+  width: 12vw;
+}
+
+.position {
+  width: 35vw;
+}
+
+.newEmployee {
+  margin-left: 78vw;
+  margin-top: 4vh;
 }

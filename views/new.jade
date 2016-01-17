@@ -5,27 +5,34 @@ block content
   form.newForm(method='post', action='/rests')
     fieldset
       legend Create Restaurant
-      label.block.not(for='name') Name
+      br
+      label.block.margTop0(for='name') Name:
       input.block(type='text', name='name', placeholder='Restaurant Name')
-      label.block(for='location') Location
+      br
+      label.block(for='location') Location:
       input.block(type='text', name='location', placeholder='City')
+      br
       select.block(name='state')
         for state in states
           option(value= state) #{state}
-      label.block(for='cuisine') Cuisine
+      br
+      label.block(for='cuisine') Cuisine:
       select.block(name='cuisine')
         for cuisine in cuisineList
           option(value=cuisine) #{cuisine}
+      br
       div.radio
-        label(for='rating') Rating:  
-        input.inrad(type='radio',name='rating',value='1')
-        input.inrad(type='radio',name='rating',value='2')
-        input.inrad(type='radio',name='rating',value='3', checked)
-        input.inrad(type='radio',name='rating',value='4')
-        input.inrad(type='radio',name='rating',value='5')
+        label.margRight12(for='rating') Rating:  
+        input.radio(type='radio',name='rating',value='1')
+        input.radio(type='radio',name='rating',value='2')
+        input.radio(type='radio',name='rating',value='3', checked)
+        input.radio(type='radio',name='rating',value='4')
+        input.radio(type='radio',name='rating',value='5')
+      br
       div.imageContainer
-        label(for='image') Image
+        label(for='image').margRight12 Image:
         input.image(type='text', name='image', placeholder='Image URL')
+      br
       textarea.block(name='bio', rows='10', cols='40', placeholder='Short Bio')
       div.btns
         button.button(type='submit', name='submit', value='submit') Submit

@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  header #{name}
+  form(method='post', action='/admin/employees/#{id}')
+    fieldset
+      legend New Employee
+      label.block(for='name') First Name:
+      input.block(type='text', name='firstname') 
+      label.block(for='name') Last Name:
+      input.block(type='text', name='lastname') 
+      label.block(for='position') Position:
+      input.block(type='text', name='position')
+      input.button(type='submit', name='submit', value='Create')

@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  header #{name}
+  hr
+  for employee in employees
+    div.adminRests
+      p #{employee.first_name} #{employee.last_name}
+      p.position #{employee.position}
+      a.button.red(href='/admin/employees/'+employee.id_emp+'/delete') Delete
+    hr
+  a.button.newEmployee(href='/admin/employees/#{restId}/new') New Employee
+  hr

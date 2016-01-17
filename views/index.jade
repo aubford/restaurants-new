@@ -2,16 +2,16 @@ extends layout
 
 block content
   header gTables
-    a.new(href='/rests/new') New Restaurant
+    a.goToNew(href='/rests/new') New Restaurant
   for rest in rests
-    div.resto
-      a.link(name='id', href='/rests/#{rest.id}')
-      p.name.padIt= rest.name
-      img.small(src = rest.image)
-      p.cuisine.padIt #{rest.cuisine} Cuisine
-      div.bottom
-        p.location.padIt #{rest.location}, #{rest.state}
-        div.rating.padRt
+    div.restoContainer
+      a.hiddenLink(name='id', href='/rests/#{rest.id}')
+      p.restoName.padL= rest.name
+      img.restoImg(src = rest.image)
+      p.restoCuisine.padL #{rest.cuisine} Cuisine
+      div.restoBottom
+        p.restoLocation.padL #{rest.location}, #{rest.state}
+        div.restoRating.padR
           -var rating = rest.rating
           -for(var i = 0; i < rating; i++)
             i.fa.fa-star
