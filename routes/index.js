@@ -9,7 +9,7 @@ console.log(typeof process.env.NODE_ENV)
 var environment = process.env.NODE_ENV || 'development';
 console.log('**********************************')
 console.log(typeof environment)
-var connectionString = require('../knexfile')[environment].connection;
+var connectionString = require('../knexfile.js')[environment].connection;
 
 function runQuery (query, callback) {
   pg.connect(connectionString, function (err, client, done) {
