@@ -54,7 +54,7 @@ block content
           input.image(type='text', name='image', placeholder='Image URL')
       br
       if bio
-        textarea.block(name='bio', rows='10', cols='40', value= bio)
+        textarea.block(name='bio', rows='10', cols='40') #{bio}
       else
         textarea.block(name='bio', rows='10', cols='40', placeholder='Short Bio')
       div.btns
