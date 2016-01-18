@@ -4,9 +4,9 @@ var pg = require('pg')
 var states = require('../public/javascripts/states.js')
 var cuisineList = require('../public/javascripts/cuisine.js')
 require('dotenv').load()
-var knex = require('../db/knex.js')
 
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost/restaurants';
+var environment = process.env.NODE_ENV || 'development';
+var connectionString = require('../knexfile')[environment].connection;
 
 function runQuery (query, callback) {
   pg.connect(connectionString, function (err, client, done) {
