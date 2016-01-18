@@ -17,5 +17,21 @@ block content
         i.yellow(class="fa fa-star")
     div.buttonsDiv
       a.button(href='/rests/'+rests.id+'/edit') Edit
+      a.button(href='/rests/'+rests.id+'/review') Add Review
       form(action='/rests/'+rests.id+'/delete', method='get')
             input.button.red(type='submit', name='delete', value='Delete')
+  div.reviews
+    if reviews
+      for review in reviews
+        div.reviewContainer
+          div.reviewHeader
+            p #{review.name}
+            p #{review.date}
+          p.review.r #{review.review}  
+          div.revBottom
+            p.revRating 
+              span.showText Rating: 
+              -var rating = review.rating
+              -for(var i = 0; i < rating; i++)
+                i.yellow(class="fa fa-star")
+            a.button(href='/rests/'+review.id+'/edit') Edit

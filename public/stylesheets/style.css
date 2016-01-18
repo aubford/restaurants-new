@@ -239,3 +239,67 @@ fieldset > * {
   margin-left: 78vw;
   margin-top: 4vh;
 }
+
+.reviews {
+  padding-top: 5vh;
+  width: 52vw;
+  clear: both;
+  /*background-color: red;*/
+  font-size: 2vmin;
+}
+
+.reviewContainer {
+  border: 1px solid black;
+  margin-left: 1vw;
+  padding: 1vw;
+  margin-top: 1vh;
+}
+
+.reviewContainer > * {
+  margin-top: 1vh;
+}
+
+.reviewHeader {
+  background-color: #e5f5e3;
+  overflow: auto;
+  padding-left: 1vw;
+}
+
+.reviewHeader p {
+  float:left;
+  height: 5vh;
+  line-height: 5vh;
+  width: 49%;
+}
+
+.review.r {
+  padding-left: 2vw;
+}
+
+.reviewHeader p:nth-of-type(2) {
+  text-align: right;
+}
+
+.revBottom {
+  overflow: auto;
+}
+
+.reviews a {
+  width: 20%;
+  margin: 0;
+  margin-top: 2vh;
+  height: 3vh;
+  line-height: 3vh;
+}
+
+.revRating {
+  width: 80%;
+  float:left;
+  margin-top: 2vh;
+  padding-left: 1vw;
+  /*font-size: 2vmin;*/
+}
+
+.revRating .showText {
+  font-size: 2vmin
+}

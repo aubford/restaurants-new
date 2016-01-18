@@ -47,14 +47,42 @@ router.post('/rests',function(req,res){
   }
     res.redirect('/rests')
 })
-//READ
+//SHOW
 router.get('/rests/:id',function(req,res){
-  var id = req.params.id + ';'
-  runQuery('select * from rests where id = '+id,function(results){
-    res.render('show',{rests:results.rows[0]})
+  var id = req.params.id
+  runQuery('select * from rests where id = '+id+";",function(results){
+    runQuery("select * from reviews where rest_id="+id+";", function(results2){
+      res.render('show',{rests:results.rows[0], reviews:results2.rows})
+    })
   })
 })
-//edit page
+//review
+router.get('/rests/:id/review',function(req,res){
+  var id = req.params.id
+  runQuery("select * from rests where id ="+id+";",function(results){
+    res.render('review',{name:results.rows[0], id:id})
+  })
+})
+
+//review CREATE
+router.post('/rests/:id/review',function(req,res){
+  var id = req.params.id
+  var name = req.body.name
+  var rating = req.body.rating
+  var review = req.body.review
+
+  var date = new Date()
+  var date = date.toDateString().split(" ").shift().join("-")
+  console.log(date)
+
+  runQuery("insert into reviews values(default,'"+name+"', '"+rating+"','"+review+"','"+date+"','"+id+"');", function(results){
+    res.redirect('/rests')
+  })
+})
+
+//review EDIT
+
+//EDIT page
 router.get('/rests/:id/edit',function(req,res){
   var id = req.params.id
 
