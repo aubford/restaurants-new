@@ -8,6 +8,8 @@ exports.up = function(knex, Promise){
           table.integer('rating')
           table.text('image')
           table.text('bio')
+})
 
 exports.down = function(knex, Promise){
      return knex.schema.dropTable('rests')
+}
