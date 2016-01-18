@@ -7,7 +7,7 @@ client: 'pg',
 connection: 'postgres://localhost/restaurants-mig'
 },
 
-producton: {
+production: {
 client: 'pg',
 connection: process.env.DATABASE_URL + '?ssl=true'
 }

@@ -4,11 +4,15 @@ var pg = require('pg')
 var states = require('../public/javascripts/states.js')
 var cuisineList = require('../public/javascripts/cuisine.js')
 require('dotenv').load()
+
 console.log('**********************************')
 console.log(typeof process.env.NODE_ENV)
+
 var environment = process.env.NODE_ENV || 'development';
+
 console.log('**********************************')
 console.log(typeof environment)
+
 var connectionString = require('../knexfile.js')[environment].connection;
 
 function runQuery (query, callback) {
