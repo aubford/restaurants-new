@@ -209,7 +209,6 @@ router.post('/admin/employees/:id', function(req,res){
   var lastname = req.body.lastname
   var position = req.body.position
   if (req.body.submit !== 'Cancel'){
-
     if (checkEmpty(req.body)){
         runQuery("select name from rests where id ="+id+";", function(results){
           res.render('employees/new', {first:firstname, last:lastname, position:position, name:results.rows[0].name, error:true, id:id})
