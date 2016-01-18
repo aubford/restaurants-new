@@ -2,7 +2,7 @@ extends layout
 
 block content
   header #{name.name}
-  form(action='/review/#{id}', method='post')
+  form(action='rests/#{id}/review', method='post')
     fieldset
       legend Add a new review
       label.block(for='name') Nickname:

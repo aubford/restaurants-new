@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+  header #{review.rests_name}
+  form(action='/rests/review/#{review.reviews_id}', method='post')
+    fieldset
+      legend Add a new review
+      label.block(for='name') Nickname:
+      input.block(type='text', name='name', value=review.reviews_name)
+      div.radio
+        label.margRight12(for='rating') Rating: 
+        input.radio(type='radio',name='rating',value='1', checked=(review.reviews_rating == 1 ? true : undefined))
+        input.radio(type='radio',name='rating',value='2', checked=(review.reviews_rating == 2 ? true : undefined))
+        input.radio(type='radio',name='rating',value='3', checked=(review.reviews_rating == 3 ? true : undefined))
+        input.radio(type='radio',name='rating',value='4', checked=(review.reviews_rating == 4 ? true : undefined))
+        input.radio(type='radio',name='rating',value='5', checked=(review.reviews_rating == 5 ? true : undefined))
+      label.block(for='review') Review:
+      textarea.block(name='review', rows='10', cols='40') #{review.reviews_review}

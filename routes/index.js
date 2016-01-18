@@ -56,11 +56,11 @@ router.get('/rests/:id',function(req,res){
     })
   })
 })
-//review
+//review NEW page
 router.get('/rests/:id/review',function(req,res){
   var id = req.params.id
   runQuery("select * from rests where id ="+id+";",function(results){
-    res.render('review',{name:results.rows[0], id:id})
+    res.render('review/new',{name:results.rows[0], id:id})
   })
 })
 
@@ -80,7 +80,13 @@ router.post('/rests/:id/review',function(req,res){
   })
 })
 
-//review EDIT
+//review EDIT page
+router.get('/rests/review/:id',function(req,res){
+  var id = req.params.id
+  runQuery("select reviews.id as reviews_id, reviews.name as reviews_name, reviews.rating as reviews_rating, reviews.review as reviews_review, rests.name as rests_name from reviews inner join rests on reviews.rest_id=rests.id where reviews.id="+id+";",function(results){
+      res.render('reviews/edit',{review:results.rows[0]})
+  })
+})
 
 //EDIT page
 router.get('/rests/:id/edit',function(req,res){
@@ -122,14 +128,14 @@ router.get('/rests/:id/delete', function(req,res){
 
 //ADMIN
 
-//all page
+//admin all page
 router.get('/admin', function(req,res){
   runQuery('select * from rests', function(results){
       res.render('admin', {rests:results.rows})
   })
 })
 
-//edit page
+//admin edit page
 router.get('/admin/employees/:id/edit', function(req,res){
   var id = req.params.id + ';'
   runQuery("select * from rests inner join employees on rests.id=employees.rest_id where rests.id="+id, function(results){
@@ -139,7 +145,7 @@ router.get('/admin/employees/:id/edit', function(req,res){
   })
 })
 
-//new page
+//admin new page
 router.get('/admin/employees/:id/new', function(req,res){
   var id = req.params.id
   runQuery("select name from rests where id="+id+";", function(results){
@@ -147,7 +153,7 @@ router.get('/admin/employees/:id/new', function(req,res){
   })
 })
 
-//CREATE
+//admin CREATE
 router.post('/admin/employees/:id', function(req,res){
   var id = req.params.id
   var firstname = req.body.firstname
@@ -159,7 +165,7 @@ router.post('/admin/employees/:id', function(req,res){
   })
 })
 
-//DELETE
+//admin DELETE
 router.get('/admin/employees/:id/delete', function(req,res){
   var id = req.params.id
   runQuery('delete from employees where id_emp ='+id+';', function(results){
