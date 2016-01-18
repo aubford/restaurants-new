@@ -5,10 +5,22 @@ block content
   form(method='post', action='/admin/employees/#{id}')
     fieldset
       legend New Employee
+      if error
+        p.redText Please complete all fields.
       label.block(for='name') First Name:
-      input.block(type='text', name='firstname') 
+      if first
+        input.block(type='text', name='firstname', value= first) 
+      else
+        input.block(type='text', name='firstname') 
       label.block(for='name') Last Name:
-      input.block(type='text', name='lastname') 
+      if last
+        input.block(type='text', name='lastname', value= last) 
+      else
+        input.block(type='text', name='lastname') 
       label.block(for='position') Position:
-      input.block(type='text', name='position')
+      if position
+        input.block(type='text', name='position', value= position)
+      else
+        input.block(type='text', name='position')
       input.button(type='submit', name='submit', value='Create')
+      input.button.red(type='submit', name='submit', value='Cancel')

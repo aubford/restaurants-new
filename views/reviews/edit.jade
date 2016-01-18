@@ -4,7 +4,7 @@ block content
   header #{review.rests_name}
   form(action='/rests/review/#{review.reviews_id}', method='post')
     fieldset
-      legend Add a new review
+      legend Add a new review:
       label.block(for='name') Nickname:
       input.block(type='text', name='name', value=review.reviews_name)
       div.radio
@@ -16,3 +16,5 @@ block content
         input.radio(type='radio',name='rating',value='5', checked=(review.reviews_rating == 5 ? true : undefined))
       label.block(for='review') Review:
       textarea.block(name='review', rows='10', cols='40') #{review.reviews_review}
+      input.button(type='submit', name='submit', value='submit')
+      button.button.red(type='submit', name='submit', value='cancel') Cancel

@@ -13,6 +13,10 @@ a {
   color: #00B7FF;
 }
 
+.redText {
+  color:red;
+}
+
 header {
   height: 10vh;
   line-height: 10vh;
@@ -181,6 +185,7 @@ fieldset {
   padding: 2vw;
   margin: 40px;
   position: relative;
+  font-size: 1vmin;
 }
 
 fieldset > * {

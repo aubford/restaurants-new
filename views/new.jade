@@ -4,36 +4,59 @@ block content
   header New Restaurant
   form.newForm(method='post', action='/rests')
     fieldset
+      if error
+        p.redText Please complete all fields.
       legend Create Restaurant
       br
       label.block.margTop0(for='name') Name:
-      input.block(type='text', name='name', placeholder='Restaurant Name')
+      if name
+        input.block(type='text', name='name', value=name)
+      else  
+        input.block(type='text', name='name', placeholder='Restaurant Name')
       br
       label.block(for='location') Location:
-      input.block(type='text', name='location', placeholder='City')
+      if location
+        input.block(type='text', name='location', value=location)
+      else
+        input.block(type='text', name='location', placeholder='City')
       br
       select.block(name='state')
         for state in states
-          option(value= state) #{state}
+          option(value= state, selected = (statey == state ? true : undefined)) #{state}
       br
       label.block(for='cuisine') Cuisine:
       select.block(name='cuisine')
         for cuisine in cuisineList
-          option(value=cuisine) #{cuisine}
+          option(value=cuisine, selected = (cuisiney = cuisine ? true : undefined)) #{cuisine}
       br
-      div.radio
-        label.margRight12(for='rating') Rating:  
-        input.radio(type='radio',name='rating',value='1')
-        input.radio(type='radio',name='rating',value='2')
-        input.radio(type='radio',name='rating',value='3', checked)
-        input.radio(type='radio',name='rating',value='4')
-        input.radio(type='radio',name='rating',value='5')
+      if rating
+        div.radio
+          label.margRight12(for='rating') Rating: 
+          input.radio(type='radio',name='rating',value='1', checked=(rating == 1 ? true : undefined))
+          input.radio(type='radio',name='rating',value='2', checked=(rating == 2 ? true : undefined))
+          input.radio(type='radio',name='rating',value='3', checked=(rating == 3 ? true : undefined))
+          input.radio(type='radio',name='rating',value='4', checked=(rating == 4 ? true : undefined))
+          input.radio(type='radio',name='rating',value='5', checked=(rating == 5 ? true : undefined))
+      else
+        div.radio
+          label.margRight12(for='rating') Rating:  
+          input.radio(type='radio',name='rating',value='1')
+          input.radio(type='radio',name='rating',value='2')
+          input.radio(type='radio',name='rating',value='3', checked)
+          input.radio(type='radio',name='rating',value='4')
+          input.radio(type='radio',name='rating',value='5')
       br
       div.imageContainer
         label(for='image').margRight12 Image:
-        input.image(type='text', name='image', placeholder='Image URL')
+        if image
+          input.image(type='text', name='image', value=image)
+        else
+          input.image(type='text', name='image', placeholder='Image URL')
       br
-      textarea.block(name='bio', rows='10', cols='40', placeholder='Short Bio')
+      if bio
+        textarea.block(name='bio', rows='10', cols='40', value= bio)
+      else
+        textarea.block(name='bio', rows='10', cols='40', placeholder='Short Bio')
       div.btns
         button.button(type='submit', name='submit', value='submit') Submit
         button.button.red(type='submit', name='submit', value='cancel') Cancel

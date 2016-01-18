@@ -18,6 +18,16 @@ function runQuery (query, callback) {
   });
 }
 
+function checkEmpty(obj){
+  var tester = false
+  for (var e in obj){
+    if (obj[e] == "") {
+      tester = true
+    }
+  }
+  return tester
+}
+
 router.get('/', function(req, res, next) {
   res.redirect('/rests')
 });
@@ -40,12 +50,19 @@ router.post('/rests',function(req,res){
   var rating = req.body.rating
   var image = req.body.image
   var bio = req.body.bio
-
   if (req.body.submit !== 'cancel'){
-    runQuery("insert into rests values(default, '"+name+"', '"+location+"', '"+state+"', '"+cuisine+"', '"+rating+"', '"+image+"', '"+bio+"')",function(results){
-    })
-  }
+
+    if (checkEmpty(req.body)){
+        res.render('new', {states:states, cuisineList:cuisineList, error:true, name:name, location:location, statey:state, cuisiney:cuisine, rating:rating, image:image, bio:bio})
+    }else{
+      runQuery("insert into rests values(default, '"+name+"', '"+location+"', '"+state+"', '"+cuisine+"', '"+rating+"', '"+image+"', '"+bio+"')",function(results){
+        res.redirect('/rests')
+      })
+    }
+
+  }else{
     res.redirect('/rests')
+  }
 })
 //SHOW
 router.get('/rests/:id',function(req,res){
@@ -60,24 +77,36 @@ router.get('/rests/:id',function(req,res){
 router.get('/rests/:id/review',function(req,res){
   var id = req.params.id
   runQuery("select * from rests where id ="+id+";",function(results){
-    res.render('review/new',{name:results.rows[0], id:id})
+    res.render('reviews/new',{name:results.rows[0], id:id})
   })
 })
 
 //review CREATE
 router.post('/rests/:id/review',function(req,res){
   var id = req.params.id
-  var name = req.body.name
+  var name = req.body.name.replace(/'/g, "''")
   var rating = req.body.rating
   var review = req.body.review
 
-  var date = new Date()
-  var date = date.toDateString().split(" ").shift().join("-")
-  console.log(date)
+  var datey = new Date()
+  var datey = datey.toDateString().split(" ")
+  datey.shift()
+  var datey = datey.join("-")
+  if (req.body.submit !== 'cancel'){
 
-  runQuery("insert into reviews values(default,'"+name+"', '"+rating+"','"+review+"','"+date+"','"+id+"');", function(results){
-    res.redirect('/rests')
-  })
+    if (checkEmpty(req.body)){
+        runQuery("select * from rests where id ="+id+";",function(results){
+          res.render('reviews/new', {name:results.rows[0],namey:name,ratingy:rating,reviewy:review,error:true,id:id})
+        })
+    }else{
+      runQuery("insert into reviews values(default,'"+name+"', '"+rating+"','"+review+"','"+datey+"','"+id+"');", function(results){
+        res.redirect('/rests')
+      })
+    }
+
+  }else{
+      res.redirect('/rests')
+  }
 })
 
 //review EDIT page
@@ -88,10 +117,30 @@ router.get('/rests/review/:id',function(req,res){
   })
 })
 
+//review UPDATE
+router.post('/rests/review/:id',function(req,res){
+  var id = req.params.id
+  var name = req.body.name.replace(/'/g, "''")
+  var rating = req.body.rating
+  var review = req.body.review
+
+  var datey = new Date()
+  var datey = datey.toDateString().split(" ")
+  datey.shift()
+  var datey = datey.join("-")
+
+  if (req.body.submit !== 'cancel'){
+    runQuery("update reviews set name='"+name+"', rating='"+rating+"', review='"+review+"',date='"+datey+"' where id="+id+";",function(results){
+      res.redirect('/rests')
+    })
+  }else{
+    res.redirect('/rests')
+  }
+})
+
 //EDIT page
 router.get('/rests/:id/edit',function(req,res){
   var id = req.params.id
-
   runQuery('select * from rests where id = '+id+';', function(results){
     res.render('edit',{rests:results.rows[0], cuisineList:cuisineList,states:states})
   })
@@ -159,10 +208,21 @@ router.post('/admin/employees/:id', function(req,res){
   var firstname = req.body.firstname
   var lastname = req.body.lastname
   var position = req.body.position
+  if (req.body.submit !== 'Cancel'){
 
-  runQuery("insert into employees values(default, '"+id+"', '"+firstname+"', '"+lastname+"', '"+position+"');", function(results){
+    if (checkEmpty(req.body)){
+        runQuery("select name from rests where id ="+id+";", function(results){
+          res.render('employees/new', {first:firstname, last:lastname, position:position, name:results.rows[0].name, error:true, id:id})
+        })
+    }else{
+        runQuery("insert into employees values(default, '"+id+"', '"+firstname+"', '"+lastname+"', '"+position+"');", function(results){
+          res.redirect('/admin')
+        })
+    }
+
+  }else{
       res.redirect('/admin')
-  })
+  }
 })
 
 //admin DELETE

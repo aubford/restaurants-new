@@ -1,18 +1,37 @@
-extends layout
+extends ../layout
 
 block content
   header #{name.name}
-  form(action='rests/#{id}/review', method='post')
+  form(action='/rests/#{id}/review', method='post')
     fieldset
       legend Add a new review
+      if error
+        p.redText Please complete all fields.
       label.block(for='name') Nickname:
-      input.block(type='text', name='name')
-      div.radio
-        label.margRight12(for='rating') Rating:  
-        input.radio(type='radio',name='rating',value='1')
-        input.radio(type='radio',name='rating',value='2')
-        input.radio(type='radio',name='rating',value='3', checked)
-        input.radio(type='radio',name='rating',value='4')
-        input.radio(type='radio',name='rating',value='5')
+      if namey
+        input.block(type='text', name='name', value= namey)
+      else
+        input.block(type='text', name='name', placeholder='Choose a username.')
+      if ratingy
+        div.radio
+          label.margRight12(for='rating') Rating: 
+          input.radio(type='radio',name='rating',value='1', checked=(ratingy == 1 ? true : undefined))
+          input.radio(type='radio',name='rating',value='2', checked=(ratingy == 2 ? true : undefined))
+          input.radio(type='radio',name='rating',value='3', checked=(ratingy == 3 ? true : undefined))
+          input.radio(type='radio',name='rating',value='4', checked=(ratingy == 4 ? true : undefined))
+          input.radio(type='radio',name='rating',value='5', checked=(ratingy == 5 ? true : undefined))
+      else
+        div.radio
+          label.margRight12(for='rating') Rating:  
+          input.radio(type='radio',name='rating',value='1')
+          input.radio(type='radio',name='rating',value='2')
+          input.radio(type='radio',name='rating',value='3', checked)
+          input.radio(type='radio',name='rating',value='4')
+          input.radio(type='radio',name='rating',value='5')
       label.block(for='review') Review:
-      textarea.block(name='review', rows='10', cols='40', placeholder='Write review here.')
+      if reviewy
+        textarea.block(name='review', rows='10', cols='40') #{reviewy}
+      else
+        textarea.block(name='review', rows='10', cols='40', placeholder='Write review here.')
+      input.button(type='submit', name='submit', value='submit')
+      button.button.red(type='submit', name='submit', value='cancel') Cancel
