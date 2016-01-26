@@ -2,6 +2,7 @@ extends layout
 
 block content
   header Management
+    a.goToNew(href='/neighborhoods ') Neighborhoods
   hr
   for rest in rests
     div.adminRests
@@ -14,5 +15,3 @@ block content
       a.button(href='/admin/employees/'+rest.id+'/edit') Edit
       a.button.red(href='/rests/'+rest.id+'/delete') Delete
     hr
-      
-      

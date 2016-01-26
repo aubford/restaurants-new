@@ -23,7 +23,7 @@ function runQuery (query, callback) {
 function checkEmpty(obj){
   var tester = false
   for (var e in obj){
-    if (obj[e] == "") {
+    if (obj[e] == "" && e!='street2') {
       tester = true
     }
   }
@@ -41,23 +41,32 @@ router.get('/rests',function(req,res){
 })
 //new page
 router.get('/rests/new',function(req,res){
-  res.render('new', {states:states, cuisineList:cuisineList})
+  runQuery("select * from neighborhoods", function(results){
+    res.render('new', {states:states, cuisineList:cuisineList, neighborhoods:results.rows})
+  })
 })
 //CREATE
 router.post('/rests',function(req,res){
   var name = req.body.name.replace(/'/g, "''")
+  var street1 = req.body.street1
+  var street2 = req.body.street2
+  var zip = req.body.zip
   var location = req.body.location
   var state = req.body.state
   var cuisine = req.body.cuisine
   var rating = req.body.rating
   var image = req.body.image
   var bio = req.body.bio
+  var neighborhood = req.body.neighborhood
+
   if (req.body.submit !== 'cancel'){
 
     if (checkEmpty(req.body)){
-        res.render('new', {states:states, cuisineList:cuisineList, error:true, name:name, location:location, statey:state, cuisiney:cuisine, rating:rating, image:image, bio:bio})
+      runQuery("select * from neighborhoods", function(results){
+        res.render('new', {states:states, cuisineList:cuisineList, error:true, name:name, location:location, street1:street1, street2:street2, zip:zip, statey:state, cuisiney:cuisine, rating:rating, image:image, bio:bio, neighborhoods:results.rows, neighborhoodSelected:neighborhood})
+      })
     }else{
-      runQuery("insert into rests values(default, '"+name+"', '"+location+"', '"+state+"', '"+cuisine+"', '"+rating+"', '"+image+"', '"+bio+"')",function(results){
+      runQuery("insert into rests values(default, '"+name+"',  '"+location+"', '"+state+"', '"+cuisine+"', '"+rating+"', '"+image+"', '"+bio+"', '"+street1+"', '"+street2+"', '"+zip+"', '"+neighborhood+"')",function(results){
         res.redirect('/rests')
       })
     }
@@ -143,30 +152,35 @@ router.post('/rests/review/:id',function(req,res){
 //EDIT page
 router.get('/rests/:id/edit',function(req,res){
   var id = req.params.id
-  runQuery('select * from rests where id = '+id+';', function(results){
-    res.render('edit',{rests:results.rows[0], cuisineList:cuisineList,states:states})
+  runQuery('select * from rests where id = '+id, function(restaurant){
+    runQuery('select * from neighborhoods', function(neighborhoods){
+      res.render('edit',{restaurant:restaurant.rows[0], cuisineList:cuisineList, states:states, neighborhoods:neighborhoods.rows})
+    })
   })
 })
 
 //UPDATE
 router.post('/rests/:id',function(req,res){
-  var id = req.params.id + ';'
+  var id = req.params.id
   var namey = req.body.name.replace(/'/g, "''")
+  var street1 = req.body.street1
+  var street2 = req.body.street2
+  var zip = req.body.zip
   var location = req.body.location
   var state = req.body.state
   var cuisine = req.body.cuisine
   var rating = req.body.rating
   var image = req.body.image
   var bio = req.body.bio
+  var neighborhood = req.body.neighborhood
 
   if(req.body.submit === 'cancel'){
     res.redirect('/rests')
   }else{
-    runQuery("update rests set name='"+namey+"', location='"+location+"', state='"+state+"', cuisine='"+cuisine+"', rating='"+rating+"', image='"+image+"', bio='"+bio+"' where id="+id, function(results){
+    runQuery("update rests set name='"+namey+"', location='"+location+"', street1='"+street1+"', street2='"+street2+"', zip='"+zip+"', state='"+state+"', cuisine='"+cuisine+"', rating='"+rating+"', image='"+image+"', neighborhood_id='"+neighborhood+"', bio='"+bio+"' where id="+id, function(results){
       res.redirect('/rests')
     })
   }
-
 })
 
 //DELETE

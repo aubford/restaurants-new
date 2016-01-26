@@ -8,12 +8,32 @@ block content
         p.redText Please complete all fields.
       legend Create Restaurant
       br
+
       label.block.margTop0(for='name') Name:
       if name
         input.block(type='text', name='name', value=name)
       else  
         input.block(type='text', name='name', placeholder='Restaurant Name')
       br
+
+      label.block(for='street1')
+      if street1
+        input.block(type='text', name='street1', value=street1)
+      else
+        input.block(type='text', name='street1', placeholder="Street 1")
+
+      label.block(for='street2')
+      if street2
+        input.block(type='text', name='street2', value=street2)
+      else
+        input.block(type='text', name='street2', placeholder="Street 2 (optional)")
+
+      label.block(for='zip')
+      if zip
+        input.block(type='number', name='zip', value=zip)
+      else
+        input.block(type='number', name='zip', placeholder="zip")
+
       label.block(for='location') Location:
       if location
         input.block(type='text', name='location', value=location)
@@ -24,10 +44,11 @@ block content
         for state in states
           option(value= state, selected = (statey == state ? true : undefined)) #{state}
       br
+
       label.block(for='cuisine') Cuisine:
       select.block(name='cuisine')
         for cuisine in cuisineList
-          option(value=cuisine, selected = (cuisiney = cuisine ? true : undefined)) #{cuisine}
+          option(value=cuisine, selected = (cuisiney == cuisine ? true : undefined)) #{cuisine}
       br
       if rating
         div.radio
@@ -53,6 +74,9 @@ block content
         else
           input.image(type='text', name='image', placeholder='Image URL')
       br
+      select.block(name='neighborhood')
+        for neighborhood in neighborhoods
+          option(value= neighborhood.id, selected=(neighborhoodSelected == neighborhood.id ? true : undefined)) #{neighborhood.name}
       if bio
         textarea.block(name='bio', rows='10', cols='40') #{bio}
       else

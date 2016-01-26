@@ -1,0 +1,28 @@
+extends ../layout
+
+block content
+  header Neighborhoods
+    a.goToNew(href='/neighborhoods/new') New
+  each location, index in locations
+    .map.mapInfo
+      a(href='/neighborhoods/#{location.id}') #{location.name}
+      div Latitude: #{location.lat.toFixed(5)}
+      div Longitude: #{location.lng.toFixed(5)}
+      div #{location.address}
+      .mapSmall(id='map#{index}')
+    br
+    br
+    hr
+  script.
+        function initMap() {
+          var locations = !{JSON.stringify(locations)}
+             locations.forEach(function(location, index){
+               var map;
+               map = new google.maps.Map(document.getElementById('map'+index), {
+                 center: {lat:Number(location.lat), lng:Number(location.lng)},
+                 zoom: 14
+               })
+             })  
+            }
+
+  script(async defer src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBWHslvJ4xsQrljwVEgg_cn6z3W-TqMYq0&callback=initMap')

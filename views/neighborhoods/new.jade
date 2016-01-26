@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+  header New Neighborhood
+  form(action="/neighborhoods", method="post")
+    fieldset.bigFields
+      legend Add a new neighborhood
+      label.block(for='name') Name your place:
+      input.block(type='text', name='name', placeholder="Name your new neighborhood.")
+      label.block(for='epicenter') Address or place-name:
+      input.block(type='text', name='epicenter', placeholder="Enter place name or address.")
+      input.button.red(type="submit", name='submit', value='submit')
+      input.button(type="submit", name='cancel', value='cancel')
+          

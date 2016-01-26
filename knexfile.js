@@ -2,14 +2,14 @@ require('dotenv').load()
 
 module.exports = {
 
-development: {
-client: 'pg',
-connection: 'postgres://localhost/restaurants-mig'
-},
+  development: {
+  client: 'pg',
+  connection: 'postgres://localhost/restaurants-mig'
+  },
 
-production: {
-client: 'pg',
-connection: process.env.DATABASE_URL + '?ssl=true'
-}
+  production: {
+  client: 'pg',
+  connection: process.env.DATABASE_URL + '?ssl=true'
+  }
 
 }

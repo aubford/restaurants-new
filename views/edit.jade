@@ -2,40 +2,57 @@ extends layout
 
 block content
   header Edit Restaurant
-  form.newForm(method='post', action='/rests/#{rests.id}')
+  form.newForm(method='post', action='/rests/#{restaurant.id}')
     fieldset
       legend Create Restaurant
       if error
         p.redText Please complete all fields.
       br
-      label.block.margTop0(for='name') Name
-      input.block(type='text', name='name', value= rests.name)
+      label.block.margTop0(for='name') Name:
+      input.block(type='text', name='name', value= restaurant.name)
       br
-      label.block(for='location') Location
-      input.block(type='text', name='location', value= rests.location)
+      label.block(for='street1')
+      input.block(type='text', name='street1', value= restaurant.street1)
+
+      if street2
+        label.block(for='street2')
+        input.block(type='text', name='street2', value= restaurant.street2)
+      else
+        label.block(for='street2')
+        input.block(type='text', name='street2', placeholder="Street 2 (optional)")
+        
+
+      label.block(for='zip')
+      input.block(type='number', name='zip', value=restaurant.zip)
+
+      label.block(for='location') Location:
+      input.block(type='text', name='location', value= restaurant.location)
       br
       select.block(name='state')
         for state in states
-          option(value= state, selected=(rests.state === state ? true : undefined)) #{state}
+          option(value= state, selected=(restaurant.state === state ? true : undefined)) #{state}
       br
-      label.block(for='cuisine') Cuisine 
+      label.block(for='cuisine') Cuisine:
       select.block(name='cuisine')
         for cuisine in cuisineList
-          option(value = cuisine selected=(rests.cuisine === cuisine ? true : undefined)) #{cuisine}
+          option(value = cuisine selected=(restaurant.cuisine === cuisine ? true : undefined)) #{cuisine}
       br
       div.radio
         label.margRight12(for='rating') Rating: 
-        input.radio(type='radio',name='rating',value='1', checked=(rests.rating == 1 ? true : undefined))
-        input.radio(type='radio',name='rating',value='2', checked=(rests.rating == 2 ? true : undefined))
-        input.radio(type='radio',name='rating',value='3', checked=(rests.rating == 3 ? true : undefined))
-        input.radio(type='radio',name='rating',value='4', checked=(rests.rating == 4 ? true : undefined))
-        input.radio(type='radio',name='rating',value='5', checked=(rests.rating == 5 ? true : undefined))
+        input.radio(type='radio',name='rating',value='1', checked=(restaurant.rating == 1 ? true : undefined))
+        input.radio(type='radio',name='rating',value='2', checked=(restaurant.rating == 2 ? true : undefined))
+        input.radio(type='radio',name='rating',value='3', checked=(restaurant.rating == 3 ? true : undefined))
+        input.radio(type='radio',name='rating',value='4', checked=(restaurant.rating == 4 ? true : undefined))
+        input.radio(type='radio',name='rating',value='5', checked=(restaurant.rating == 5 ? true : undefined))
       br
       div.imageContainer
         label(for='image').margRight12 Image: 
-        input.image(type='text', name='image', value= rests.image)
+        input.image(type='text', name='image', value= restaurant.image)
       br
-      textarea.block(name='bio', rows='10', cols='40') #{rests.bio}
+      select.block(name='neighborhood')
+        for neighborhood in neighborhoods
+          option(value= neighborhood.id, selected=(restaurant.neighborhood_id == neighborhood.id ? true : undefined)) #{neighborhood.name}
+      textarea.block(name='bio', rows='10', cols='40') #{restaurant.bio}
       div.btns
         input.button(type='submit', name='submit', value='submit')  
         input.button.red(type='submit', name='submit', value='cancel')
